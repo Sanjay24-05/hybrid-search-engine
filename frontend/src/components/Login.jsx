@@ -11,6 +11,8 @@ export default function Login({ onLogin }) {
         setError('');
 
         const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+        console.log("Current API_BASE:", API_BASE); // Debugging log
+        console.log("Env VITE_API_URL:", import.meta.env.VITE_API_URL); // Debugging log
         const endpoint = isRegister ? `${API_BASE}/api/register` : `${API_BASE}/api/login`;
 
         try {
