@@ -58,7 +58,9 @@ func CORS(next http.Handler) http.Handler {
 	allowed := []string{"http://localhost:5173", "http://localhost:3000", "http://127.0.0.1:5173", "http://localhost:5174", "http://localhost:5175"}
 
 	if envOrigins := os.Getenv("ALLOWED_ORIGINS"); envOrigins != "" {
-		allowed = append(allowed, strings.Split(envOrigins, ",")...)
+		for _, origin := range strings.Split(envOrigins, ",") {
+			allowed = append(allowed, strings.TrimSuffix(strings.TrimSpace(origin), "/"))
+		}
 	}
 
 	c := cors.New(cors.Options{
