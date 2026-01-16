@@ -10,7 +10,8 @@ export default function Login({ onLogin }) {
         e.preventDefault();
         setError('');
 
-        const endpoint = isRegister ? 'http://localhost:8080/api/register' : 'http://localhost:8080/api/login';
+        const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+        const endpoint = isRegister ? `${API_BASE}/api/register` : `${API_BASE}/api/login`;
 
         try {
             const res = await fetch(endpoint, {
