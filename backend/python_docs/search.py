@@ -1,13 +1,21 @@
 import json
 import os
 
-def search_documents(user_dir, query):
-    index_path = f"{user_dir}/index.json"
+def search_documents(user_dir: str, query: str):
+    index_path = os.path.join(user_dir, "index.json")
     if not os.path.exists(index_path):
         return []
 
-    index = json.load(open(index_path))
-    return [
-        doc for doc in index
-        if query.lower() in doc["content"].lower()
-    ]
+    with open(index_path, "r", encoding="utf-8") as f:
+        index = json.load(f)
+
+    results = []
+    for doc in index:
+        content = doc.get("content", "").lower()
+        if query.lower() in content:
+            results.append({
+                "file": os.path.basename(doc["file"]),
+                "snippet": content[:200]
+            })
+
+    return results
