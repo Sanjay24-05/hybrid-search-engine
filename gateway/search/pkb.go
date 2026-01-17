@@ -27,7 +27,7 @@ func getEmbedding(query string) ([]float32, error) {
 	req, _ := http.NewRequest("POST", workerURL, bytes.NewBuffer(body))
 	req.Header.Set("Content-Type", "application/json")
 
-	client := &http.Client{Timeout: 5 * time.Second}
+	client := &http.Client{Timeout: 60 * time.Second}
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
