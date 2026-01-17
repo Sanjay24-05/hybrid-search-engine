@@ -5,8 +5,11 @@ export default function StorageBar({ token, triggerUpdate }) {
     const max = 50 * 1024 * 1024; // 50MB
 
     const fetchUsage = async () => {
+        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        const API_BASE = import.meta.env.VITE_API_URL || (isLocal ? 'http://localhost:8080' : 'https://nexus-search-1.onrender.com');
+
         try {
-            const res = await fetch('http://localhost:8080/api/user', {
+            const res = await fetch(`${API_BASE}/api/user`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (res.ok) {
