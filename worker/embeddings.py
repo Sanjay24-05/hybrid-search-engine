@@ -15,3 +15,11 @@ def get_model():
 def generate_embedding(text):
     model = get_model()
     return model.encode(text).tolist()
+
+def generate_embeddings(texts):
+    """Batch process embeddings"""
+    if not texts:
+        return []
+    model = get_model()
+    embeddings = model.encode(texts)
+    return [e.tolist() for e in embeddings]

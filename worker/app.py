@@ -7,7 +7,7 @@ load_dotenv()
 
 import tempfile
 from processor import parse_file, chunk_text
-from embeddings import generate_embedding
+from embeddings import generate_embedding, generate_embeddings
 from storage import save_document, check_quota
 
 app = Flask(__name__)
@@ -74,8 +74,9 @@ def process_file():
         chunks = chunk_text(text)
         print(f"Chunked into {len(chunks)} segments. Generating embeddings...")
         
-        # 4. Embed
-        embeddings = [generate_embedding(chunk) for chunk in chunks]
+        # 4. Embed (Batch)
+        print(f"Generating embeddings for {len(chunks)} chunks...")
+        embeddings = generate_embeddings(chunks)
         print("Embeddings generated.")
         
         # 5. Save
